@@ -98,10 +98,10 @@ namespace CashRegistrer.Tests
         }
 
         [Test]
-        public void AddProductByScanningBarcode_InvalidProduct_DisplayErrorMessage()
+        public void AddProductByScanningBarcode_InvalidProduct_DisplayErrorMessageWhenBarCodeNotIdentified()
         {
             // Arrange
-            var barcode = "111111111";
+            var barcode = "000000000";
             var quantity = 1;
 
             // Act
@@ -118,7 +118,7 @@ namespace CashRegistrer.Tests
             var totalPrice = cart.CalculateTotalPrice();
 
             // Assert
-            Assert.AreEqual(0.0, totalPrice);
+            Assert.That(totalPrice, Is.EqualTo(0.0));
         }
 
         [Test]
