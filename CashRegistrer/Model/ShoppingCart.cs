@@ -54,13 +54,17 @@ namespace CashRegistrer.Model
 
         public void DisplayReceipt(double initalTotalPrice, double discount)
         {
+            Console.ForegroundColor= ConsoleColor.Blue;
             Console.WriteLine("==================Receipt===================");
 
             Console.WriteLine("Items in the Cart:");
+            Console.ResetColor();
+
             foreach (var item in GetItems())
             {
                 Console.WriteLine($"[+] {item.Key.Name} ({item.Key.Category}): {item.Value} x {item.Key.Price}£ ");
             }
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("--------------------------------------------");
 
             Console.WriteLine($"Total Amount To Pay : {initalTotalPrice}£");
@@ -72,6 +76,7 @@ namespace CashRegistrer.Model
             Console.WriteLine("============================================");
             Console.WriteLine($"Left to pay : {totalPrice}£");
             Console.WriteLine("==================Receipt===================");
+            Console.ResetColor();
 
         }
 

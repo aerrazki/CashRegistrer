@@ -33,17 +33,27 @@ namespace CashRegistrer.Services
 
                         //Adding the free item
                         cart.AddToCart(productCart.Key, 1);
-                        Console.WriteLine($"{offerActivationMessage} 1 more free '{productCart.Key.Name}' to add to cart and {totalItemPriceOdd / 2}£ discount on {productCart.Key.Name}");
+                        Console.Write($"{offerActivationMessage} ");
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write($"1 more free '{productCart.Key.Name}' to add to cart");
+                        Console.ResetColor();
+
+                        Console.Write($"and {totalItemPriceOdd / 2}£ discount on {productCart.Key.Name}");
                     }
                 }
                 else
                 {
                     cart.AddToCart(productCart.Key, 1);
-                    Console.WriteLine($"{offerActivationMessage} 1 more free '{productCart.Key.Name}' to add to cart");
+                    Console.Write($"{offerActivationMessage} ");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write($"1 more free '{productCart.Key.Name}' to add to cart");
+                    Console.ResetColor();
+
+
                 }
             }
+            Console.ResetColor();
             Console.WriteLine($"\nTotal discount Applied [Buy one Get One] Offer  : {discount}£");
-
             return discount;
         }
     }
