@@ -20,13 +20,17 @@ namespace CashRegistrer.Model
         public string BarCode { get; set; }
         public int QuantityInStock { get; set; }
 
-        public Product(string name, double price, string category, int quantity, string barcode= "")
+        public Product(string name, double price, string category, int quantity, string barcode = "")
         {
             Name = name;
             Price = price;
             Category = category;
             QuantityInStock = quantity;
             BarCode = barcode;
+        }
+        public override string ToString()
+        {
+            return $"[+] {Category} - {Name} - {Price}£";
         }
     }
 }

@@ -76,7 +76,7 @@ class Program
         {
             new Product("Apple", 1.0, "Fruits", 100),
             new Product("Banana", 0.5, "Fruits", 50),
-            new Product("Laptop", 1000.0, "Electronics", 10),
+            new Product("Laptop", 1000.0, "Electronics", 10, barcode:"1234567890"),
             new Product("Orange", 0.75, "Fruits", 75),
             new Product("Strawberries", 2.0, "Fruits", 30),
             new Product("Milk", 2.5, "Dairy", 40),
@@ -111,8 +111,10 @@ class Program
 
     static void AddProductByScanningBarcode()
     {
-        var barcode = Utilities.ReadStringFromConsole("Barcode?");
-        scannedBarCode.AddToCart(barcode, 1);
+        // Initiate barcode scanning and get the barcode to identify the product and add to cart
+        var barcode = scannedBarCode.ScanBarCode();
+
+        scannedBarCode.AddToCart(barcode);
     }
 
     static void ViewCart()
