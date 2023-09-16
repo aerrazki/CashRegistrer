@@ -12,7 +12,7 @@ namespace CashRegistrer.Services
     {
         public double ApplyDiscount(ShoppingCart cart)
         {
-            var offerActivationMessage = "[Buy one Get One] Offer Activated:";
+            var offerActivationMessage = "[Buy one Get One] Offer Activated: ";
             double discount = 0;
             foreach (var productCart in cart.GetItems())
             {

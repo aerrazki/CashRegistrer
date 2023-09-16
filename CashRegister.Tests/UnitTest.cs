@@ -48,11 +48,11 @@ namespace CashRegistrer.Tests
             // Assert
             var items = cart.GetItems();
             Assert.IsTrue(items.ContainsKey(productCatalog.GetProductByName(productName)));
-            Assert.AreEqual(items[productCatalog.GetProductByName(productName)], quantity);
+            Assert.That(quantity, Is.EqualTo(items[productCatalog.GetProductByName(productName)]));
         }
 
         [Test]
-        public void AddProductManually_InvalidProduct_DisplayErrorMessage()
+        public void AddProductManually_InvalidProduct_DisplayErrorMessageWhenProductNameIsNotFound()
         {
             // Arrange
             var productName = "InvalidProduct";
@@ -61,7 +61,22 @@ namespace CashRegistrer.Tests
             // Act and Assert
             Assert.Throws<InvalidOperationException>(() =>
             {
-                manualEntryStrategy.AddToCart(productName, quantity); // Cannot Add a not found product in Catalog to Cart
+                manualEntryStrategy.AddToCart(productName, quantity);                                   // Cannot Add a not found product in Catalog to Cart
+            });
+
+        }
+
+        [Test]
+        public void AddProductManually_InvalidProduct_DisplayErrorMessageWhenQuantityIsMoreThanStock()
+        {
+            // Arrange
+            var productName = "Apple";
+            var quantity = 300;
+
+            // Act and Assert
+            Assert.Throws<InvalidOperationException>(() =>
+            {
+                manualEntryStrategy.AddToCart(productName, quantity);                                   // Cannot Add a not found product in Catalog to Cart
             });
 
         }
@@ -79,7 +94,7 @@ namespace CashRegistrer.Tests
             // Assert
             var items = cart.GetItems();
             Assert.IsTrue(items.ContainsKey(productCatalog.GetProductByBarcode(barcode)));
-            Assert.AreEqual(items[productCatalog.GetProductByBarcode(barcode)], quantity);
+            Assert.That(quantity, Is.EqualTo(items[productCatalog.GetProductByBarcode(barcode)]));
         }
 
         [Test]
@@ -117,7 +132,7 @@ namespace CashRegistrer.Tests
             var totalPrice = cart.CalculateTotalPrice();
 
             // Assert
-            Assert.AreEqual(3.5, totalPrice); // 2 Apples at 1.0 each + 3 Bananas at 0.5 each
+            Assert.That(totalPrice, Is.EqualTo(3.5));                                               // 2 Apples at 1.0 each + 3 Bananas at 0.5 each
         }
 
         [Test]
@@ -133,9 +148,9 @@ namespace CashRegistrer.Tests
             var items = cart.GetItems();
             var totalPrice = initalPrice - discount;
             // Assert
-            Assert.AreEqual(items[productCatalog.GetProductByName("Banana")], 4); // After [Buy One Get One discount] for the first 2 banans one will be already paid by the discount, and for the 3rd bananas the customer will have another free banana in his shopping cart makes it 4 in total
-            Assert.AreEqual(3.5, initalPrice); // 2 Apples at 1.0 each + 3 Bananas at 0.5 each
-            Assert.AreEqual(2, totalPrice); // 2 Apples at 1.0 each + 3 Bananas at 0.5 each
+            Assert.That(4, Is.EqualTo(items[productCatalog.GetProductByName("Banana")]));           // After [Buy One Get One discount] for the first 2 banans one will be already paid by the discount, and for the 3rd bananas the customer will have another free banana in his shopping cart makes it 4 in total
+            Assert.That(initalPrice, Is.EqualTo(3.5));                                              // 2 Apples at 1.0 each + 3 Bananas at 0.5 each
+            Assert.That(totalPrice, Is.EqualTo(2));                                                 // 2 Apples at 1.0 each + 3 Bananas at 0.5 each
         }
 
         [Test]
@@ -145,22 +160,22 @@ namespace CashRegistrer.Tests
             var discount = cart.GetDiscount();
 
             // Assert
-            Assert.AreEqual(0.0, discount);
+            Assert.That(discount, Is.EqualTo(0.0));
         }
 
         [Test]
         public void GetDiscount_ApplyDiscounts_CalculatesDiscount()
         {
             // Arrange
-            manualEntryStrategy.AddToCart("Apple", 4); // Buy One Get One discount
-            manualEntryStrategy.AddToCart("Banana", 10); // [Buy One Get One discount] & [Buy10ItemsProductGetOneEuro discount]
+            manualEntryStrategy.AddToCart("Apple", 4);                                              // Buy One Get One discount
+            manualEntryStrategy.AddToCart("Banana", 10);                                            // [Buy One Get One discount] & [Buy10ItemsProductGetOneEuro discount]
 
             // Act
             var discount = cart.GetDiscount();
             Console.WriteLine(discount);
 
             // Assert
-            Assert.AreEqual(5.5, discount); // 2 euros discount for apple + 2.5 euros for bananas for [Buy One Get One offer] + 1 euro (bananas) for [Buy10ItemsProductGetOneEuro]
+            Assert.That(discount, Is.EqualTo(5.5));                                                 // 2 euros discount for apple + 2.5 euros for bananas for [Buy One Get One offer] + 1 euro (bananas) for [Buy10ItemsProductGetOneEuro]
         }
     }
 }

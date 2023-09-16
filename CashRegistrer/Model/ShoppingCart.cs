@@ -37,8 +37,7 @@ namespace CashRegistrer.Model
 
             if (quantity > catalogProduct.QuantityInStock)
             {
-                Console.WriteLine($"Not enough '{product.Name}' in stock.");
-                return;
+                throw new InvalidOperationException($"Not enough '{product.Name}' in stock.");
             }
 
             catalogProduct.QuantityInStock -= quantity;
@@ -51,7 +50,6 @@ namespace CashRegistrer.Model
             {
                 items[product] = quantity;
             }
-            //Console.WriteLine($"Added {quantity} {product.Name}(s) to your shopping cart");
         }
 
         public void DisplayReceipt(double initalTotalPrice, double discount)
