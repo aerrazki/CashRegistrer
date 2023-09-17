@@ -73,7 +73,7 @@ namespace CashRegistrer.Tests
             var quantity = 300;
 
             // Act and Assert
-            manualEntryStrategy.AddToCart(productName, quantity);                                   // Cannot Add a not found product in Catalog to Cart
+            manualEntryStrategy.AddToCart(productName, quantity);                                   // Cannot Add a product quantity more than in the Catalog
             var items = cart.GetItems().Count;
             Assert.That(items, Is.EqualTo(0));
         }
