@@ -20,7 +20,7 @@ Le code met en place deux types d'offres spéciales pour les produits ajoutés a
 
 <b>BuyOneGetOneDiscount (Strategy) :</b> Pour chaque produit acheté, un produit gratuit est ajouté au panier. Si un nombre impair de produits est ajouté, un produit supplémentaire est offert, et le coût de la moitié du nombre impair - 1 est déduit.
 
-<b>Buy10ItemsProductGetOneEuro (Strategy) :</b> Cette offre permet de déduire 1 euro pour chaque lot de 10 produits ajoutés au panier.
+<b>Buy10ItemsProductGetOneEuro (Strategy) :</b> Cette offre permet de déduire 1 euro pour chaque lot de 10 articles du même produit ajoutés au panier.
 
 Ces offres spéciales sont appliquées à l'aide de la méthode GetDiscount de la classe ShoppingCart, qui calcule la valeur totale des remises applicables pour les produits actuellement dans le panier.
 
