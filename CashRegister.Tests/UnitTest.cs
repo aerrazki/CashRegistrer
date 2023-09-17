@@ -147,7 +147,7 @@ namespace CashRegistrer.Tests
             // Assert
             Assert.That(4, Is.EqualTo(items[productCatalog.GetProductByName("Banana")]));           // After [Buy One Get One discount] for the first 2 banans one will be already paid by the discount, and for the 3rd bananas the customer will have another free banana in his shopping cart makes it 4 in total
             Assert.That(initalPrice, Is.EqualTo(3.5));                                              // 2 Apples at 1.0 each + 3 Bananas at 0.5 each
-            Assert.That(totalPrice, Is.EqualTo(2));                                                 // 2 Apples at 1.0 each + 3 Bananas at 0.5 each
+            Assert.That(totalPrice, Is.EqualTo(2));                                                 // After [Buy One Get One discount] 2 Apples at 1.0 each + 3 Bananas at 0.5 each 
         }
 
         [Test]
