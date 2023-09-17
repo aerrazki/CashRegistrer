@@ -7,6 +7,8 @@ Mis en place le design pattern Strategy pour la gestion des produits dans un pan
 <h3>Stratégies de Gestion des Produits :</h3>
 
 <b>ScannedBarEntryStrategy :</b> Cette stratégie permet l'ajout de produits en scannant des codes-barres.
+! La fonction <b>ScanBarCode()</b> permet de brancher aun SDK, simule un scan par le biais du lecteur codebar et retourne par la suite le codebar scanné.
+Si jamais le produit existe dans le catalogue, il sera donc ajouté dans le panier.
 
 <b>ManualEntryStrategy</b> : Cette stratégie permet l'ajout de produits manuellement.
 
@@ -21,3 +23,7 @@ Le code met en place deux types d'offres spéciales pour les produits ajoutés a
 <b>Buy10ItemsProductGetOneEuro (Strategy) :</b> Cette offre permet de déduire 1 euro pour chaque lot de 10 produits ajoutés au panier.
 
 Ces offres spéciales sont appliquées à l'aide de la méthode GetDiscount de la classe ShoppingCart, qui calcule la valeur totale des remises applicables pour les produits actuellement dans le panier.
+
+<h3>Paiement:</h3>
+
+Au niveau du program.cs Le code permet de brancher avec une api du paiement "fonction Pay()" et valide la commande lorsque la transaction est validée.
