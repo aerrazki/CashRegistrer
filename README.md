@@ -27,3 +27,7 @@ Ces offres spéciales sont appliquées à l'aide de la méthode GetDiscount de l
 <h3>Paiement:</h3>
 
 Au niveau du program.cs Le code permet de brancher avec une api du paiement "fonction Pay()" et valide la commande lorsque la transaction est validée.
+
+<h3>DEMO</h3>
+https://github.com/aerrazki/MarketPos/assets/122980259/efafbe03-671c-4581-90cd-5f14e78b1f30
+
