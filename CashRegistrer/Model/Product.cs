@@ -20,8 +20,9 @@ namespace CashRegistrer.Model
         public string BarCode { get; set; }
         public int QuantityInStock { get; set; }
 
-        public Product(string name, double price, string category, int quantity, string barcode = "")
+        public Product(int id, string name, double price, string category, int quantity, string barcode = "")
         {
+            Id = id;
             Name = name;
             Price = price;
             Category = category;

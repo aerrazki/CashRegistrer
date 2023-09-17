@@ -21,13 +21,21 @@ namespace CashRegistrer.Model
             return products;
         }
 
+        public Product GetProductById(int id)
+        {
+            var product = products.FirstOrDefault(p => p.Id == id);
+            if (product == null)
+                Console.WriteLine($"Product Id '{id}' not found in the catalog.");
+
+            return product;
+        }
+
         public Product GetProductByName(string name)
         {
             var product = products.FirstOrDefault(p => p.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
             if (product == null)
-            {
-                throw new InvalidOperationException($"Product '{name}' not found in the catalog.");
-            }
+                Console.WriteLine($"Product '{name}' not found in the catalog.");
+
             return product;
         }
 
@@ -35,9 +43,7 @@ namespace CashRegistrer.Model
         {
             var product = products.FirstOrDefault(p => p.BarCode.Equals(barcode, StringComparison.OrdinalIgnoreCase));
             if (product == null)
-            {
-                throw new InvalidOperationException($"Product Barcode '{barcode}' not found in the catalog.");
-            }
+                Console.WriteLine($"Product barcode'{barcode}' not found in the catalog.");
             return product;
         }
     }

@@ -30,9 +30,9 @@ namespace CashRegistrer.Tests
             scannedBarcode = new ScannedBarEntryStrategy(productCatalog, cart);
 
             // Add some test products to the catalog
-            productCatalog.AddProduct(new Product("Apple", 1.0, "Fruits", 100));
-            productCatalog.AddProduct(new Product("Banana", 0.5, "Fruits", 50));
-            productCatalog.AddProduct(new Product("Laptop", 1000.0, "Electronics",quantity: 10, barcode:"1234567890"));
+            productCatalog.AddProduct(new Product(1,"Apple", 1.0, "Fruits", 100));
+            productCatalog.AddProduct(new Product(2,"Banana", 0.5, "Fruits", 50));
+            productCatalog.AddProduct(new Product(3, "Laptop", 1000.0, "Electronics",quantity: 10, barcode:"1234567890"));
         }
 
         [Test]

@@ -25,19 +25,26 @@ namespace CashRegistrer.Model
 
             if (catalogProduct == null)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"Product '{product.Name}' not found in the catalog.");
+                Console.ResetColor();
                 return;
             }
 
             if (quantity <= 0)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Invalid quantity.");
+                Console.ResetColor();
                 return;
             }
 
             if (quantity > catalogProduct.QuantityInStock)
             {
-                throw new InvalidOperationException($"Not enough '{product.Name}' in stock.");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Not enough '{product.Name}' in stock.");
+                Console.ResetColor();
+                return;
             }
 
             catalogProduct.QuantityInStock -= quantity;
@@ -50,11 +57,14 @@ namespace CashRegistrer.Model
             {
                 items[product] = quantity;
             }
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"Added product : {catalogProduct}");
+            Console.ResetColor();
         }
 
         public void DisplayReceipt(double initalTotalPrice, double discount)
         {
-            Console.ForegroundColor= ConsoleColor.Blue;
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("==================Receipt===================");
 
             Console.WriteLine("Items in the Cart:");

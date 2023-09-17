@@ -27,7 +27,9 @@ namespace CashRegistrer.Services
             if (productEntity == null)
                 Console.WriteLine($"Product '{product}' not found in the catalog.");
             else
+            {
                 cart.AddToCart(productEntity, quantity);
+            }
 
         }
     }

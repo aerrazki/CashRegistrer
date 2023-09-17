@@ -62,6 +62,7 @@ class Program
 
     static void Initialize()
     {
+
         productCatalog = new ProductCatalog();
         discountsActivated = new List<IDiscountManager>() {
             new BuyOneGetOneDiscount(),
@@ -74,17 +75,17 @@ class Program
         scannedBarCode = new ScannedBarEntryStrategy(productCatalog, cart);
         var products = new List<Product>
         {
-            new Product("Apple", 1.0, "Fruits", 100),
-            new Product("Banana", 0.5, "Fruits", 50),
-            new Product("Laptop", 1000.0, "Electronics", 10, barcode:"1234567890"),
-            new Product("Orange", 0.75, "Fruits", 75),
-            new Product("Strawberries", 2.0, "Fruits", 30),
-            new Product("Milk", 2.5, "Dairy", 40),
-            new Product("Bread", 1.0, "Bakery", 60),
-            new Product("Toothpaste", 3.0, "Personal Care", 20),
-            new Product("Shampoo", 4.0, "Personal Care", 15),
-            new Product("T-shirt", 15.0, "Apparel", 25),
-            new Product("Jeans", 30.0, "Apparel", 15)
+            new Product(1, "Apple", 1.0, "Fruits", 100),
+            new Product(2, "Banana", 0.5, "Fruits", 50),
+            new Product(3, "Laptop", 1000.0, "Electronics", 10, barcode:"1234567890"),
+            new Product(4, "Orange", 0.75, "Fruits", 75),
+            new Product(5, "Strawberries", 2.0, "Fruits", 30),
+            new Product(6, "Milk", 2.5, "Dairy", 40),
+            new Product(7, "Bread", 1.0, "Bakery", 60),
+            new Product(8, "Toothpaste", 3.0, "Personal Care", 20),
+            new Product(9, "Shampoo", 4.0, "Personal Care", 15),
+            new Product(10,"T-shirt", 15.0, "Apparel", 25),
+            new Product(11, "Jeans", 30.0, "Apparel", 15)
         };
 
         foreach (var product in products)
@@ -95,18 +96,22 @@ class Program
 
     static void DisplayCatalog()
     {
-        foreach (var item in productCatalog.GetProducts().OrderBy(x => x.Category))
-            Console.WriteLine($"[+] {item.Category} - {item.Name} - {item.Price}£");
+        foreach (var item in productCatalog.GetProducts().OrderBy(x => x.Id).ThenBy(x => x.Category))
+            if (item.Id > 9)
+                Console.WriteLine($"{item.Id} - [+] {item.Category} - {item.Name} - {item.Price}£");
+            else
+                Console.WriteLine($"{item.Id}  - [+] {item.Category} - {item.Name} - {item.Price}£");
 
         Console.WriteLine();
     }
     static void AddProductManually()
     {
         DisplayCatalog();
-        var productName = Utilities.ReadStringFromConsole("Enter the product name: ");
+        var inputId = Utilities.ReadIntegerFromConsole("Enter the product number: ");
+        var product = productCatalog.GetProductById(inputId);
         var quantity = Utilities.ReadIntegerFromConsole("Enter the product quantity: ");
-
-        manualEntryStategy.AddToCart(productName, quantity);
+        if (product != null)
+            manualEntryStategy.AddToCart(product.Name, quantity);
     }
 
     static void AddProductByScanningBarcode()
@@ -120,10 +125,16 @@ class Program
     static void ViewCart()
     {
         Console.WriteLine("Items in the Cart:");
+        Console.ForegroundColor = ConsoleColor.Blue;
+        var items = cart.GetItems();
+        if(items.Count > 0)
         foreach (var item in cart.GetItems())
-        {
             Console.WriteLine($"[+] {item.Key.Name} ({item.Key.Category}): {item.Value} x {item.Key.Price}£ ");
-        }
+        else
+            Console.WriteLine($"[!] Your shopping cart is empty");
+
+        Console.ResetColor();
+
     }
 
     static void Pay()

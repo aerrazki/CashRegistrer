@@ -54,12 +54,8 @@ namespace CashRegistrer.Services
             if (productEntity == null)
                 Console.WriteLine($"Product with barcode '{barcode}' not found in the catalog.");
             else
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"Added product : {productEntity}");
-                Console.ResetColor();
                 cart.AddToCart(productEntity, quantity);
-            }
+
         }
     }
 }
