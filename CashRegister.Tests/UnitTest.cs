@@ -112,7 +112,7 @@ namespace CashRegistrer.Tests
         public void CalculateTotalPrice_EmptyCart_ReturnsZero()
         {
             // Act
-            var totalPrice = cart.CalculateTotalPrice(isPaymentAccepted:true);
+            var totalPrice = cart.CalculateTotalPrice();
 
             // Assert
             Assert.That(totalPrice, Is.EqualTo(0.0));
@@ -126,7 +126,7 @@ namespace CashRegistrer.Tests
             manualEntryStrategy.AddToCart("Banana", 3);
 
             // Act
-            var totalPrice = cart.CalculateTotalPrice(isPaymentAccepted: true);
+            var totalPrice = cart.CalculateTotalPrice();
 
             // Assert
             Assert.That(totalPrice, Is.EqualTo(3.5));                                               // 2 Apples at 1.0 each + 3 Bananas at 0.5 each
@@ -140,8 +140,8 @@ namespace CashRegistrer.Tests
             manualEntryStrategy.AddToCart("Banana", 3);
 
             // Act
-            var initalPrice = cart.CalculateTotalPrice(isPaymentAccepted: true);
-            var discount = cart.GetDiscount(isPaymentAccepted: true);
+            var initalPrice = cart.CalculateTotalPrice();
+            var discount = cart.GetDiscount();
             var items = cart.GetItems();
             var totalPrice = initalPrice - discount;
             // Assert
@@ -154,7 +154,7 @@ namespace CashRegistrer.Tests
         public void GetDiscount_NoDiscounts_ReturnsZero()
         {
             // Act
-            var discount = cart.GetDiscount(isPaymentAccepted: true);
+            var discount = cart.GetDiscount();
 
             // Assert
             Assert.That(discount, Is.EqualTo(0.0));
@@ -168,7 +168,7 @@ namespace CashRegistrer.Tests
             manualEntryStrategy.AddToCart("Banana", 10);                                            // [Buy One Get One discount] & [Buy10ItemsProductGetOneEuro discount]
 
             // Act
-            var discount = cart.GetDiscount(isPaymentAccepted: true);
+            var discount = cart.GetDiscount();
             Console.WriteLine(discount);
 
             // Assert

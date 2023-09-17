@@ -139,29 +139,44 @@ class Program
 
     static void Pay()
     {
-        var isPaymentAccepted = false;
-        /* 
-         *  Link to payment gateway here 
-         */
-        //isPaymentAccepted = true;
-        /* 
-         *  End Link to payment gateway
-         */
-        if (isPaymentAccepted)
+        var itemsCount = cart.GetItems().Count;
+        var isPaymentAuthorized = false;
+
+        //Initiate payment 
+        if (itemsCount > 0)
         {
-            var totalToPay = cart.CalculateTotalPrice(isPaymentAccepted);
-            var totalDiscount = cart.GetDiscount(isPaymentAccepted);
-            cart.DisplayReceipt(totalToPay, totalDiscount);
+            /* 
+             *  Link to payment gateway here 
+             */
+
+            isPaymentAuthorized = false; //Simulating transaction approved
+
+            /* 
+             *  End Link to payment gateway
+             */
+
+            if (!isPaymentAuthorized)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("[!]===================[!]");
+                Console.WriteLine("Payment not authorized");
+                Console.WriteLine("[!]===================[!]");
+                Console.ResetColor();
+            }
+            else
+            {
+                var totalToPay = cart.CalculateTotalPrice();
+                var totalDiscount = cart.GetDiscount();
+                cart.DisplayReceipt(totalToPay, totalDiscount);
+            }
         }
         else
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("[!]===================[!]");
-            Console.WriteLine("Payment not authorized");
-            Console.WriteLine("[!]===================[!]");
-            Console.ResetColor();
+            Console.WriteLine($"[!] Your shopping cart is empty");
 
-        }
+        Thread.Sleep(1000);
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.WriteLine("Payment process done, exiting...");
+        Console.ResetColor();
     }
     static void WaitForKeyPress()
     {

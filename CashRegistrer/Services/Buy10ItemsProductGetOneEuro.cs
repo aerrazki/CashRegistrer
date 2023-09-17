@@ -14,10 +14,10 @@ namespace CashRegistrer.Services
         {
             int discount = 0;
             foreach (var cartProduct in cart.GetItems())
-            {
                 discount += ((cartProduct.Value) / 10);
-            }
-            Console.WriteLine($"Total discount Applied for [Buy X10 same product Get one] offer : {discount}£\n");
+
+            if (discount > 0)
+                Console.WriteLine($"Total discount Applied for [Buy X10 same product Get one] offer : {discount}£\n");
             return discount;
         }
     }

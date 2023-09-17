@@ -90,24 +90,21 @@ namespace CashRegistrer.Model
 
         }
 
-        public double GetDiscount(bool isPaymentAccepted)
+        public double GetDiscount()
         {
             var discount = 0.0;
-            if (isPaymentAccepted)
-            {
-                foreach (var discountStrategy in discountManager)
-                    discount += discountStrategy.ApplyDiscount(this);
-            }
+
+            foreach (var discountStrategy in discountManager)
+                discount += discountStrategy.ApplyDiscount(this);
+
             return discount;
         }
-        public double CalculateTotalPrice(bool isPaymentAccepted)
+        public double CalculateTotalPrice()
         {
             double totalPrice = 0.0;
-            if (isPaymentAccepted)
-            {
-                foreach (var item in items)
-                    totalPrice += item.Key.Price * item.Value;
-            }
+            foreach (var item in items)
+                totalPrice += item.Key.Price * item.Value;
+
             return totalPrice;
         }
 
