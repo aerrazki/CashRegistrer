@@ -127,9 +127,9 @@ class Program
         Console.WriteLine("Items in the Cart:");
         Console.ForegroundColor = ConsoleColor.Blue;
         var items = cart.GetItems();
-        if(items.Count > 0)
-        foreach (var item in cart.GetItems())
-            Console.WriteLine($"[+] {item.Key.Name} ({item.Key.Category}): {item.Value} x {item.Key.Price}£ ");
+        if (items.Count > 0)
+            foreach (var item in cart.GetItems())
+                Console.WriteLine($"[+] {item.Key.Name} ({item.Key.Category}): {item.Value} x {item.Key.Price}£ ");
         else
             Console.WriteLine($"[!] Your shopping cart is empty");
 
@@ -139,10 +139,29 @@ class Program
 
     static void Pay()
     {
-        double totalToPay = cart.CalculateTotalPrice();
-        double totalDiscount = cart.GetDiscount();
+        var isPaymentAccepted = false;
+        /* 
+         *  Link to payment gateway here 
+         */
+        //isPaymentAccepted = true;
+        /* 
+         *  End Link to payment gateway
+         */
+        if (isPaymentAccepted)
+        {
+            var totalToPay = cart.CalculateTotalPrice(isPaymentAccepted);
+            var totalDiscount = cart.GetDiscount(isPaymentAccepted);
+            cart.DisplayReceipt(totalToPay, totalDiscount);
+        }
+        else
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("[!]===================[!]");
+            Console.WriteLine("Payment not authorized");
+            Console.WriteLine("[!]===================[!]");
+            Console.ResetColor();
 
-        cart.DisplayReceipt(totalToPay, totalDiscount);
+        }
     }
     static void WaitForKeyPress()
     {

@@ -4,6 +4,7 @@ using CashRegistrer.Services;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using System;
+using System.IO;
 using System.Collections.Generic;
 
 namespace CashRegistrer.Tests
@@ -59,11 +60,9 @@ namespace CashRegistrer.Tests
             var quantity = 2;
 
             // Act and Assert
-            Assert.Throws<InvalidOperationException>(() =>
-            {
-                manualEntryStrategy.AddToCart(productName, quantity);                                   // Cannot Add a not found product in Catalog to Cart
-            });
-
+            manualEntryStrategy.AddToCart(productName, quantity);                                   // Cannot Add a not found product in Catalog to Cart
+            var items = cart.GetItems().Count;
+            Assert.That(items, Is.EqualTo(0));
         }
 
         [Test]
@@ -74,11 +73,9 @@ namespace CashRegistrer.Tests
             var quantity = 300;
 
             // Act and Assert
-            Assert.Throws<InvalidOperationException>(() =>
-            {
-                manualEntryStrategy.AddToCart(productName, quantity);                                   // Cannot Add a not found product in Catalog to Cart
-            });
-
+            manualEntryStrategy.AddToCart(productName, quantity);                                   // Cannot Add a not found product in Catalog to Cart
+            var items = cart.GetItems().Count;
+            Assert.That(items, Is.EqualTo(0));
         }
 
         [Test]
@@ -90,9 +87,9 @@ namespace CashRegistrer.Tests
 
             // Act
             scannedBarcode.AddToCart(barcode, quantity);
+            var items = cart.GetItems();
 
             // Assert
-            var items = cart.GetItems();
             Assert.IsTrue(items.ContainsKey(productCatalog.GetProductByBarcode(barcode)));
             Assert.That(quantity, Is.EqualTo(items[productCatalog.GetProductByBarcode(barcode)]));
         }
@@ -105,17 +102,17 @@ namespace CashRegistrer.Tests
             var quantity = 1;
 
             // Act
-            Assert.Throws<InvalidOperationException>(() =>
-            {
-                scannedBarcode.AddToCart(barcode, quantity);
-            });
+            scannedBarcode.AddToCart(barcode, quantity);
+            //Assert
+            var items = cart.GetItems().Count;
+            Assert.That(items,Is.EqualTo(0));
         }
 
         [Test]
         public void CalculateTotalPrice_EmptyCart_ReturnsZero()
         {
             // Act
-            var totalPrice = cart.CalculateTotalPrice();
+            var totalPrice = cart.CalculateTotalPrice(isPaymentAccepted:true);
 
             // Assert
             Assert.That(totalPrice, Is.EqualTo(0.0));
@@ -129,7 +126,7 @@ namespace CashRegistrer.Tests
             manualEntryStrategy.AddToCart("Banana", 3);
 
             // Act
-            var totalPrice = cart.CalculateTotalPrice();
+            var totalPrice = cart.CalculateTotalPrice(isPaymentAccepted: true);
 
             // Assert
             Assert.That(totalPrice, Is.EqualTo(3.5));                                               // 2 Apples at 1.0 each + 3 Bananas at 0.5 each
@@ -143,8 +140,8 @@ namespace CashRegistrer.Tests
             manualEntryStrategy.AddToCart("Banana", 3);
 
             // Act
-            var initalPrice = cart.CalculateTotalPrice();
-            var discount = cart.GetDiscount();
+            var initalPrice = cart.CalculateTotalPrice(isPaymentAccepted: true);
+            var discount = cart.GetDiscount(isPaymentAccepted: true);
             var items = cart.GetItems();
             var totalPrice = initalPrice - discount;
             // Assert
@@ -157,7 +154,7 @@ namespace CashRegistrer.Tests
         public void GetDiscount_NoDiscounts_ReturnsZero()
         {
             // Act
-            var discount = cart.GetDiscount();
+            var discount = cart.GetDiscount(isPaymentAccepted: true);
 
             // Assert
             Assert.That(discount, Is.EqualTo(0.0));
@@ -171,7 +168,7 @@ namespace CashRegistrer.Tests
             manualEntryStrategy.AddToCart("Banana", 10);                                            // [Buy One Get One discount] & [Buy10ItemsProductGetOneEuro discount]
 
             // Act
-            var discount = cart.GetDiscount();
+            var discount = cart.GetDiscount(isPaymentAccepted: true);
             Console.WriteLine(discount);
 
             // Assert
