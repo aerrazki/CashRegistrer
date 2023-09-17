@@ -1,4 +1,4 @@
-# CashRegistrer
+# MarketPos
 
 <h2>Design Pattern Strategy (Stratégie) pour la Gestion des Produits et des Offres</h2>
 
